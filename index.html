@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body data-new-gr-c-s-loaded="14.1094.0" spellcheck="false">
+    <hr>
+    <p><label for="n">Enter the number of pulses in the timeline:</label><input type="number" id="n" placeholder="Enter n" class="fr-rounded"><br></p>
+    <p><label for="onsets">Enter the number of onsets in the timeline:</label><input type="text" id="onsets" placeholder="Enter onsets (comma separated)"></p>
+    <p><button>&nbsp;Calculate&nbsp;</button></p>
+    <div id="result">The full interval vector is:</div>
+    <hr>
+    <p><br></p>
+    <script>
+        function findIntervalVector(n, onsets) {
+          if (n < 3) {
+            alert("n must be 3 or larger.");
+            return;
+          }
+        
+          for (var i = 0; i < onsets.length; i++) {
+            onsets[i] = onsets[i] % n;
+          }
+        
+          var largestInterval = Math.floor(n / 2);
+          var intervalVector = Array(largestInterval).fill(0);
+          for (var i = 0; i < onsets.length - 1; i++) {
+            for (var j = i + 1; j < onsets.length; j++) {
+              var distance = Math.abs(onsets[i] - onsets[j]) % n;
+              if (distance <= largestInterval) {
+                intervalVector[distance - 1]++;
+              } else {
+                intervalVector[n - distance - 1]++;
+              }
+            }
+          }
+        
+          document.getElementById("result").innerHTML =
+            "The full interval vector is: " + intervalVector.toString().replace(/,/g, ", ");
+        }
+    </script>
+</body>
+
+</html>
